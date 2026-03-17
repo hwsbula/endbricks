@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://endbricks.com/sitemap.xml
