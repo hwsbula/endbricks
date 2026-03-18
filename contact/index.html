@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Endbricks</title>
   <meta name="description" content="Start a practical conversation with Endbricks about AI implementation, workflow improvement, and operational use cases.">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -70,9 +71,10 @@
                 What are you trying to improve?
                 <textarea name="challenge" rows="6" required></textarea>
               </label>
+              <div class="cf-turnstile" data-sitekey="0x4AAAAAACsaPQ59_pMzmZb4"></div>
               <input type="text" name="_gotcha" class="hidden-field" tabindex="-1" autocomplete="off">
               <button class="button button-primary" type="submit">Send Inquiry</button>
-              <p class="form-note">Your details are used only to review the inquiry and respond with the most relevant next step. See the privacy page for details.</p>
+              <p class="form-note">Your details are used only to review the inquiry and respond with the most relevant next step. Cloudflare Turnstile is used to reduce automated spam. See the privacy page for details.</p>
             </form>
           </div>
           <div class="contact-sidebar">
