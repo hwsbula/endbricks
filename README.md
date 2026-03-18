@@ -1,8 +1,13 @@
-# Endbricks Static Site
+# Endbricks Website
 
-Static multi-page marketing site for Endbricks, designed for deployment on Sevalla free static hosting.
+Static multi-page marketing site for Endbricks.
 
-## Structure
+Production deployment is handled through Sevalla from the GitHub repo:
+
+- Repo: [https://github.com/hwsbula/endbricks](https://github.com/hwsbula/endbricks)
+- Hosting: Sevalla static site
+
+## Site Structure
 
 - `index.html`
 - `services/index.html`
@@ -15,40 +20,79 @@ Static multi-page marketing site for Endbricks, designed for deployment on Seval
 - `assets/css/styles.css`
 - `assets/js/site.js`
 
+## Current Production Notes
+
+- The site is built as plain static HTML, CSS, and JavaScript.
+- Contact form submissions are handled by Formspree.
+- Cloudflare Turnstile is embedded on the contact form for spam protection.
+- The site is designed to be deployed from the repository root without a build step.
+
+## Contact Form
+
+The contact form lives in `contact/index.html`.
+
+Current integration:
+
+- Form endpoint: `https://formspree.io/f/xbdzpbqd`
+- Turnstile site key is embedded in the form markup
+
+Important:
+
+- Formspree must have Turnstile enabled in its dashboard
+- The Turnstile secret key must be configured in Formspree
+
 ## Local Preview
 
 From the project root:
 
 ```bash
-python3 -m http.server 4173
+python3 -m http.server 4180
 ```
 
 Then open:
 
 ```txt
-http://localhost:4173
+http://localhost:4180
 ```
 
-## Before Launch
+## Deployment
 
-1. Replace the Formspree placeholder in `contact/index.html`.
-2. Replace the company credibility placeholder copy in `about/index.html` if you want something more specific.
-3. Replace the privacy placeholder in `privacy/index.html`.
-4. Update `robots.txt` and `sitemap.xml` if the production domain is not `endbricks.com`.
-5. Swap in real case studies, testimonials, and outcome metrics as they become available.
+Sevalla should be configured as:
 
-## Sevalla Deployment
+- Branch: `main`
+- Build command: none
+- Publish directory: `.`
 
-1. Push this directory to your repo.
-2. Create a static site in Sevalla.
-3. Set the publish directory to the repo root, or the folder containing these files.
-4. Connect the production domain.
-5. Test the contact form submission after adding the real endpoint.
+Any push to `main` should be deployable directly by Sevalla.
 
-## Content Priorities
+## Content and Maintenance
 
-- Strong homepage headline and proof
-- Clear company credibility and implementation proof
-- At least 2 credible case studies
-- Privacy and form compliance
-- Consistent CTA: `Book a Consultation`
+When making updates, check these first:
+
+- `robots.txt`
+- `sitemap.xml`
+- `contact/index.html`
+- `privacy/index.html`
+
+Review after any meaningful content or design change:
+
+- homepage hero spacing and header overlay
+- contact form submission and Turnstile widget
+- footer layout across all core pages
+- mobile layout on `index.html`, `about/index.html`, and `how-it-works/index.html`
+
+## Design System Notes
+
+- Headers use `Manrope`
+- Body copy uses `"Text Node", "Manrope", sans-serif`
+- The site relies on shared layout rules in `assets/css/styles.css`
+- Interactions and small UI behaviors live in `assets/js/site.js`
+
+## Recommended Update Workflow
+
+1. Make edits locally.
+2. Preview with `python3 -m http.server 4180`.
+3. Check desktop and mobile layouts.
+4. Commit changes.
+5. Push to `main`.
+6. Verify the Sevalla deployment and test the contact form.
