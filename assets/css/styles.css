@@ -2959,6 +2959,7 @@ h3 {
   font-size: 1.5rem;
   margin-bottom: 0.75rem;
   text-align: center;
+  text-wrap: balance;
 }
 
 .exit-popup p {
@@ -2971,7 +2972,8 @@ h3 {
 }
 
 .exit-popup-dismiss {
-  display: inline-block;
+  display: block;
+  margin: 0 auto;
   background: none;
   border: none;
   color: var(--text-dim);

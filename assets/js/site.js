@@ -160,7 +160,7 @@ document.querySelectorAll("[data-tabs]").forEach((group) => {
         '<p class="eyebrow">Before you go</p>' +
         '<h2>Are your workflows ready for AI?</h2>' +
         '<p>Download the free Readiness Checklist to assess where your team stands before starting an implementation.</p>' +
-        '<a class="button button-primary" href="/checklist/">Get the Checklist</a><br>' +
+        '<a class="button button-primary" href="/checklist/">Get the Checklist</a>' +
         '<button class="exit-popup-dismiss" type="button">No thanks</button>' +
       '</div>';
     document.body.appendChild(overlay);
