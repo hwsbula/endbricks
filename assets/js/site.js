@@ -79,6 +79,39 @@ document.querySelectorAll("[data-tabs]").forEach((group) => {
   });
 });
 
+/* ── Checklist form AJAX submit ── */
+
+(function () {
+  var form = document.getElementById("checklist-form");
+  if (!form) return;
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = "Sending\u2026";
+
+    fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { Accept: "application/json" }
+    })
+      .then(function (res) {
+        if (res.ok) {
+          window.location.href = "/checklist/thank-you/";
+        } else {
+          throw new Error("Form submission failed");
+        }
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.textContent = "Download the Checklist";
+        alert("Something went wrong. Please try again.");
+      });
+  });
+})();
+
 /* ── Exit-intent popup ── */
 
 (function () {
