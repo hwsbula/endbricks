@@ -82,19 +82,6 @@ document.querySelectorAll("[data-tabs]").forEach((group) => {
 /* ── Checklist form: redirect then silent submit ── */
 
 (function () {
-  /* On the checklist form page: intercept submit, redirect with params */
-  var form = document.getElementById("checklist-form");
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      var name = form.querySelector('[name="name"]').value;
-      var email = form.querySelector('[name="email"]').value;
-      var params = new URLSearchParams({ name: name, email: email });
-      window.location.href = "/checklist/thank-you/?" + params.toString();
-    }, true);
-  }
-
   /* On the thank-you page: read params, POST to Formspree, clean URL */
   if (window.location.pathname === "/checklist/thank-you/" || window.location.pathname === "/checklist/thank-you") {
     var params = new URLSearchParams(window.location.search);
