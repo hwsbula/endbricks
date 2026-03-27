@@ -79,9 +79,46 @@ document.querySelectorAll("[data-tabs]").forEach((group) => {
   });
 });
 
-/* ── Checklist form: redirect then silent submit ── */
+/* ── Checklist form: Turnstile (explicit) + redirect then silent submit ── */
 
 (function () {
+  /* On the checklist page: render Turnstile explicitly and gate submit */
+  var turnstileEl = document.getElementById("checklist-turnstile");
+  var form = document.getElementById("checklist-form");
+  if (turnstileEl && form && typeof turnstile !== "undefined") {
+    turnstile.render("#checklist-turnstile", {
+      sitekey: "0x4AAAAAACsaPQ59_pMzmZb4"
+    });
+
+    form.addEventListener("submit", function (e) {
+      var response = turnstile.getResponse();
+      if (!response) {
+        e.preventDefault();
+        alert("Please complete the verification challenge.");
+      }
+    });
+  }
+
+  /* If Turnstile script hasn't loaded yet, wait for it */
+  if (turnstileEl && form && typeof turnstile === "undefined") {
+    var checkReady = setInterval(function () {
+      if (typeof turnstile !== "undefined") {
+        clearInterval(checkReady);
+        turnstile.render("#checklist-turnstile", {
+          sitekey: "0x4AAAAAACsaPQ59_pMzmZb4"
+        });
+
+        form.addEventListener("submit", function (e) {
+          var response = turnstile.getResponse();
+          if (!response) {
+            e.preventDefault();
+            alert("Please complete the verification challenge.");
+          }
+        });
+      }
+    }, 200);
+  }
+
   /* On the thank-you page: read params, POST to Formspree, clean URL */
   if (window.location.pathname === "/checklist/thank-you/" || window.location.pathname === "/checklist/thank-you") {
     var params = new URLSearchParams(window.location.search);

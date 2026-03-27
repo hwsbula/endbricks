@@ -41,6 +41,7 @@
       }
     }
   </script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -88,6 +89,7 @@
                 <input type="email" name="email" required>
               </label>
               <input type="text" name="_gotcha" class="hidden-field" tabindex="-1" autocomplete="off">
+              <div id="checklist-turnstile"></div>
               <button class="button button-primary" type="submit">Download the Checklist</button>
               <p class="form-note">Your email is used only to deliver the checklist. You will not be added to a mailing list.</p>
             </form>
