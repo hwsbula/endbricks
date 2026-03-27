@@ -85,16 +85,22 @@ document.querySelectorAll("[data-tabs]").forEach((group) => {
   var form = document.getElementById("checklist-form");
   if (!form) return;
 
+  var endpoint = form.getAttribute("action");
+  form.removeAttribute("action");
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    e.stopImmediatePropagation();
 
     var btn = form.querySelector('button[type="submit"]');
     btn.disabled = true;
     btn.textContent = "Sending\u2026";
 
-    fetch(form.action, {
+    var data = new FormData(form);
+
+    fetch(endpoint, {
       method: "POST",
-      body: new FormData(form),
+      body: data,
       headers: { Accept: "application/json" }
     })
       .then(function (res) {
@@ -109,7 +115,7 @@ document.querySelectorAll("[data-tabs]").forEach((group) => {
         btn.textContent = "Download the Checklist";
         alert("Something went wrong. Please try again.");
       });
-  });
+  }, true);
 })();
 
 /* ── Exit-intent popup ── */
