@@ -2958,6 +2958,7 @@ h3 {
 .exit-popup h2 {
   font-size: 1.5rem;
   margin-bottom: 0.75rem;
+  text-align: center;
 }
 
 .exit-popup p {
