@@ -79,43 +79,42 @@ document.querySelectorAll("[data-tabs]").forEach((group) => {
   });
 });
 
-/* ── Checklist form AJAX submit ── */
+/* ── Checklist form: redirect then silent submit ── */
 
 (function () {
+  /* On the checklist form page: intercept submit, redirect with params */
   var form = document.getElementById("checklist-form");
-  if (!form) return;
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      var name = form.querySelector('[name="name"]').value;
+      var email = form.querySelector('[name="email"]').value;
+      var params = new URLSearchParams({ name: name, email: email });
+      window.location.href = "/checklist/thank-you/?" + params.toString();
+    }, true);
+  }
 
-  var endpoint = form.getAttribute("action");
-  form.removeAttribute("action");
+  /* On the thank-you page: read params, POST to Formspree, clean URL */
+  if (window.location.pathname === "/checklist/thank-you/" || window.location.pathname === "/checklist/thank-you") {
+    var params = new URLSearchParams(window.location.search);
+    var name = params.get("name");
+    var email = params.get("email");
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
+    if (name && email) {
+      var data = new FormData();
+      data.append("name", name);
+      data.append("email", email);
 
-    var btn = form.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    btn.textContent = "Sending\u2026";
-
-    var data = new FormData(form);
-
-    fetch(endpoint, {
-      method: "POST",
-      body: data,
-      headers: { Accept: "application/json" }
-    })
-      .then(function (res) {
-        if (res.ok) {
-          window.location.href = "/checklist/thank-you/";
-        } else {
-          throw new Error("Form submission failed");
-        }
-      })
-      .catch(function () {
-        btn.disabled = false;
-        btn.textContent = "Download the Checklist";
-        alert("Something went wrong. Please try again.");
+      fetch("https://formspree.io/f/mvzvgqjj", {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" }
       });
-  }, true);
+
+      history.replaceState(null, "", "/checklist/thank-you/");
+    }
+  }
 })();
 
 /* ── Exit-intent popup ── */
