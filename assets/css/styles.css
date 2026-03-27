@@ -2960,6 +2960,9 @@ h3 {
   margin-bottom: 0.75rem;
   text-align: center;
   text-wrap: balance;
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .exit-popup p {
