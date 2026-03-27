@@ -78,3 +78,62 @@ document.querySelectorAll("[data-tabs]").forEach((group) => {
     });
   });
 });
+
+/* ── Exit-intent popup ── */
+
+(function () {
+  var EXCLUDED = ["/checklist/", "/checklist/thank-you/"];
+  var STORAGE_KEY = "eb_exit_popup_seen";
+  var MOBILE_DELAY = 30000;
+
+  if (EXCLUDED.indexOf(window.location.pathname) !== -1) return;
+  if (localStorage.getItem(STORAGE_KEY)) return;
+
+  function buildPopup() {
+    var overlay = document.createElement("div");
+    overlay.className = "exit-popup-overlay";
+    overlay.innerHTML =
+      '<div class="exit-popup">' +
+        '<button class="exit-popup-close" type="button" aria-label="Close">&times;</button>' +
+        '<p class="eyebrow">Before you go</p>' +
+        '<h2>Are your workflows ready for AI?</h2>' +
+        '<p>Download the free Readiness Checklist to assess where your team stands before starting an implementation.</p>' +
+        '<a class="button button-primary" href="/checklist/">Get the Checklist</a><br>' +
+        '<button class="exit-popup-dismiss" type="button">No thanks</button>' +
+      '</div>';
+    document.body.appendChild(overlay);
+    return overlay;
+  }
+
+  var overlay = null;
+
+  function showPopup() {
+    if (localStorage.getItem(STORAGE_KEY)) return;
+    if (!overlay) overlay = buildPopup();
+    overlay.classList.add("is-visible");
+    localStorage.setItem(STORAGE_KEY, "1");
+
+    overlay.querySelector(".exit-popup-close").addEventListener("click", closePopup);
+    overlay.querySelector(".exit-popup-dismiss").addEventListener("click", closePopup);
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) closePopup();
+    });
+  }
+
+  function closePopup() {
+    if (overlay) overlay.classList.remove("is-visible");
+  }
+
+  // Desktop: exit intent (mouse leaves viewport at top)
+  document.addEventListener("mouseout", function (e) {
+    if (!e.relatedTarget && e.clientY <= 0) {
+      showPopup();
+    }
+  });
+
+  // Mobile fallback: show after 30 seconds
+  var isMobile = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  if (isMobile) {
+    setTimeout(showPopup, MOBILE_DELAY);
+  }
+})();

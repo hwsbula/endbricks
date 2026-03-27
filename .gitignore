@@ -1,3 +1,5 @@
 .DS_Store
 qa-*.png
 utility-icon
+.fonts/
+.preview/

@@ -8,4 +8,9 @@
   <url><loc>https://endbricks.com/contact/</loc></url>
   <url><loc>https://endbricks.com/faq/</loc></url>
   <url><loc>https://endbricks.com/privacy/</loc></url>
+  <url>
+    <loc>https://endbricks.com/checklist/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
